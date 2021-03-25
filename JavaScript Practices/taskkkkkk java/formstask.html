@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task update and delete</title>
+    <link rel="stylesheet" href="formstask.css">
+</head>
+
+<body>
+    <h2>
+        Update and delete the form records
+    </h2>
+
+    <table id="Fields-decore">
+        <tr>
+            <td>Name:</td>
+            <td><input type="text" placeholder="Name" id="nameID" value=""></td>
+        </tr>
+        <tr>
+            <td>Email:</td>
+            <td><input type="text" placeholder="Email" id="emailID" value=""></td>
+        </tr>
+        <tr>
+            <td>Age</td>
+            <td><input type="number" placeholder="Age" id="ageID" value=""></td>
+        </tr>
+        <tr>
+            <td>Phone No:</td>
+            <td><input type="number" placeholder="Phone Number" id="phoneID" value="">
+            <input type="button"  value="Submit" onclick="addFields()">
+            <input type="button"  value="Update" onclick="UpdateCell1()">
+        </td>
+        </tr>
+    </table>
+<br>
+
+    <table id="table-dec">
+        <tr>
+            <th class="heading">
+                Name
+            </th>
+            <th class="heading">
+                Email
+            </th>
+            <th class="heading">
+                Age
+            </th>
+            <th class="heading">
+                Phone Number
+            </th>
+            <th colspan="2">
+                <button type="button">
+                    Actions
+                </button>
+            </th>      
+        </tr>
+        <!-- <tr id="tableData">
+            <td>adeel</td>
+            <td>adeel.dev@pk.see.biz</td>
+            <td>24</td>
+            <td>03137877907</td>
+            <td>
+                <button type="button" onclick="GetIndex(this)" >
+                    Update
+                </button>
+            </td>
+            <td>
+                <button type="button" onclick="DeleteCell(this)" >
+                    Delete
+                </button>
+            </td>
+        </tr> -->
+     
+    
+    <script src="formstask.js">
+        //////////////javascript file included
+    </script>
+</body>
+
+</html>

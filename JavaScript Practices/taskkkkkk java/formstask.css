@@ -1,0 +1,31 @@
+#table-dec
+{
+    border: 2px solid rebeccapurple;
+    background-color: grey;
+}   
+.heading{
+    border: 2px solid black;
+    background-color: darkolivegreen;
+    color:floralwhite;
+}
+.button-Dec{
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 100;
+    color: cornflowerblue;
+    background-color: darkgoldenrod;
+}
+.inputsDec
+{
+    background-color: oldlace;
+}
+#tableData
+{
+    color: black;
+}
+#Fields-decore
+{
+    background-color: aqua;
+    box-sizing: border-box;
+    border: 1px solid royalblue;
+    border-radius: 10px;
+}
