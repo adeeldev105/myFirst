@@ -10,3 +10,4 @@ function myFunction()
     console.log("Sum : ",sum);
 }
 myFunction();
+myFunction();
