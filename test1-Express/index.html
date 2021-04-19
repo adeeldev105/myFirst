@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="test.css"> -->
+    <title>Document</title>
+</head>
+
+<body>
+    <span class="dropdown" id>
+        <button type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
+            onclick="display()">Dropdown</button>
+        <!-- <span style="display: none;">
+            <ul id="listID">
+            </ul>
+        </span> -->
+        <select name="userslist" id="listID" onchange="getProducts(event)">
+            <!-- appending user values in options -->
+        </select>
+    </span>
+
+    <div>
+        <table id="TableID">
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+            </tr>
+        </table>
+    </div>
+
+    <div>
+        <table id="updateRecord">
+                    <form autocomplete="off" submit="event.prevetdefault();">
+                        <div>
+                            <div>
+                                <label>Name : </label>
+                                <input type="text" name="ProductName" id="nameID">
+                            </div>
+                            <div>
+                                <label>Price : </label>
+                                <input type="number" name="ProductPrice" id="priceID">
+                            </div>
+                        </div>
+                        <!-- <div class="form-button" onclick="collectingDataToUpdate()">
+                            <input type="submit" value="UPDATE"> 
+                        </div> -->
+                    </form>
+        </table>
+    </div>
+
+    <script>
+        /////////////////////for display nd fetching data from DB
+        function display() 
+        {
+            var displayU = document.getElementById("dropdownMenuButton1").nextElementSibling;
+            if (displayU.style.display == "block") {
+                displayU.style.display = "none";
+            }
+            else {
+                displayU.style.display = "block";
+            }
+            fun();
+        }
+        function user_display(users)
+        {
+            var select = document.getElementById("listID");
+            var options = "<option value='0'>select</option>";
+            for (var i = 0; i < users.length; i++) 
+            {
+              options += "<option value='" + users[i]._id + "'>'" + users[i].username + "</option>";
+            }
+            select.innerHTML = options;
+        }
+        function products_display(products, user_id) 
+        {
+          var oldtable=document.getElementById("TableID");
+          if (oldtable.childNodes.length>2)
+          {
+            
+            for (var i=2;i<oldtable.childNodes.length;i++);
+            {
+              oldtable.remove(oldtable.childNodes.i)
+            }
+          }
+          var table = document.getElementById("TableID");
+          ///////////////////for products
+          for (var i = 0; i < products.length; i++) 
+          {
+          // console.log(typeof(products[i].price));
+
+                var tr = document.createElement("TR");
+                var td1 = document.createElement("TD");
+                var td2 = document.createElement("TD");
+                var btn1 = document.createElement("BUTTON");//////////delete button
+                btn1.onclick = (function (slug) {
+                return function () {
+                  // fetchRecordInTable(products[i].title,products[i].price);
+                  fetchRecordInTable(this);
+                  collectingDataToUpdate(slug);
+                  // updateTheRecords(slug);
+
+              }
+            })(products[i].slug, this);
+                
+                var btn2 = document.createElement("BUTTON");//////edit button
+                btn2.onclick = (function (slug) {
+                    return function () {
+                        DeleteTheRecord(slug);
+                        // console.log(slug);
+                        removeRecord(this);
+                    }
+                })(products[i].slug, this);
+                ////////////changing text to a node value
+                txt1 = document.createTextNode(products[i].title);
+                txt2 = document.createTextNode(products[i].price);
+                txt3 = document.createTextNode("Edit");
+                txt4 = document.createTextNode("Delete");
+                /////////////appending text to table data
+                td1.appendChild(txt1);
+                td2.appendChild(txt2);
+                btn1.appendChild(txt3);
+                btn2.appendChild(txt4);
+                //////////////appending table data to table row
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                tr.appendChild(btn1);
+                tr.appendChild(btn2);
+                //////////////////appending all rows data to a table 
+                table.appendChild(tr);
+            }
+        }
+        function fetchRecordInTable(index)
+        {
+          var p_name = index.parentNode.childNodes[0].innerHTML;
+          var p_price=index.parentNode.childNodes[1].innerHTML;
+          document.getElementById("nameID").value=p_name;
+          document.getElementById("priceID").value=p_price;
+          // console.log("Name :",p_name);
+          // console.log("Price :",p_price);
+          /////////////////respective values of products loaded in update value table...................
+        }
+       function collectingDataToUpdate(slug)
+        {
+          // var p_slug=slug;
+          // console.log(p_slug);
+          // console.log(p_name);
+          // console.log(p_price);
+          var table=document.getElementById("updateRecord");
+          var upButton=document.createElement("BUTTON");
+          txt4 = document.createTextNode("Update");
+          upButton.appendChild(txt4);
+          table.appendChild(upButton);
+          upButton.onclick=(function(p_slug)
+          {
+            return function(){
+              updateFinalrecords(p_slug)
+            }
+          })(slug);
+        }
+        async function updateFinalrecords(p_slug)
+        {
+          var p_name = document.getElementById("nameID").value;
+          var p_price = document.getElementById("priceID").value;
+          console.log(p_name);
+          console.log(p_price);
+          console.log(p_slug);
+            await fetch(`http://localhost:8000/update/${p_slug}/Name/${p_name}/price/${p_price}`, { method: "PUT" })
+                 .then(async (res) => {
+                     myValue = await res.json();
+                     alert(myValue.value);
+                 }).catch((error) => {
+                     console.log(error);
+                 });     
+        
+
+        }
+        async function fun() {
+            await fetch("http://localhost:8000/user")
+            .then(async (res) => {
+                users = await res.json();
+                user_display(users);
+            }).catch((error) => {
+                console.log(error);
+            })
+        }
+        async function DeleteTheRecord(p_slug) {
+            await fetch(`http://localhost:8000/delete/products/${p_slug}`, { method: "DELETE" })
+                .then(async (res) => {
+                    myValue = await res.json();
+                    alert(myValue.value);
+                }).catch((error) => {
+                    console.log(error);
+                });
+
+        }
+        ///////////////removing row on console window 
+        function removeRecord(index) 
+        {
+            var i = index.parentNode.rowIndex;
+            document.getElementById("TableID").deleteRow(i);
+        }
+        async function getProducts(user_id) 
+        {
+            user_id=user_id.target.value;
+            await fetch(`http://localhost:8000/user/${user_id}/products`)
+                .then(async (res) => {
+                    products = await res.json();
+                    products_display(products, user_id);
+                    // console.log(products[0].price);
+                }).catch((error) => {
+                    console.log(error);
+                });
+              }
+    </script>
+    </body>
+
+</html>

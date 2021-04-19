@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="test.css">
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+    <title>Test Assesment</title>
+</head>
+
+<body>
+
+
+
+    <div class="cotainer">
+        <div class="table-content">
+            <table class="myTable" id="myTableID">
+                <tr>
+                    <th class="tuples">ID</th>
+                    <th class="tuples">User Name</th>
+                    <th class="tuples">Unique URL</th>
+                    <th class="tuples">Phone No#</th>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div>
+        <button onclick="click()">
+            Show Users
+        </button>
+        <p id="p1"></p>
+    </div>
+    <br>
+    <br>
+    <div class="dropdown">
+
+        <span>Users Details</span>
+        <div class="dropdown-content1">
+            <p>User 1
+            <div class="dropdown-content2">
+                <p>Further details</p>
+            </div>
+            </p>
+        </div>
+    </div>
+    <!-- Script file -->
+    <script>
+        var url = 'http://localhost:9020/get';
+        function click()
+        {
+            console.log("In click function...")
+            document.getElementById("p1").innerHTML = "In click function...";
+        }
+                // window.alert("Result : ",result);
+            //     var table = document.getElementById('myTableID').innerHTML;
+            //     for (let i = 0; i < result.length; i++) {
+            //         var row = `<tr>
+            //     <td> ${result[i]._id}</td>
+            //     <td> ${result[i].username}</td>
+            //     <td> ${result[i].unique_url}</td>
+            //     <td> ${result[i].phone}</td> 
+            //     </tr>`
+            //     }
+            //     table.innerHTML += row;
+    </script>
+</body>
+
+</html>
